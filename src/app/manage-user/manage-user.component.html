@@ -1,0 +1,75 @@
+<div class="container-fluid h-100 w-100">
+    <div class="row">
+        <div class="col-2 left">
+            <div class="list-group margin">
+                <button routerLink="/" type="button" class="list-group-item list-group-item-action">Manage User</button>
+                <button routerLink="/managetodo" type="button" class="list-group-item list-group-item-action">Manage
+                    Todo</button>
+                <button routerLink="/adddata" type="button" class="list-group-item list-group-item-action">Add
+                    User</button>
+                <button routerLink="/addtodo" type="button" class="list-group-item list-group-item-action">Add
+                    Todo</button>
+                <button routerLink="/manageuser" type="button" class="list-group-item list-group-item-action">Manage
+                    User</button>
+            </div>
+        </div>
+        <div class="col-10 right mt-2">
+            <div>
+                <div class="row">
+                    <div class="col">
+                        <label for="selectedDate">Select Date:</label>
+                        <input matInput [matDatepicker]="picker" id="selectedDate" name="selectedDate"
+                            [(ngModel)]="selectedDate" (dateChange)="onDateChange($event)">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </div>
+
+                    <div class="col"><button class="btn btn-light" (click)="showToday()">Today's Todos</button></div>
+                    <div class="col"><button class="btn btn-light" (click)="showUpcoming()">Upcoming Todos</button>
+                    </div>
+                    <div class="col"><button class="btn btn-light" (click)="showDone()">{{isShowDone? "Done Todos" :
+                            "Pending Todos"}}</button></div>
+                    <div class="col">
+                        <select name="cars" class="mt-2" [(ngModel)]="selectedPriority" (change)="showPriority()">
+                            <option value="">Search Priority</option>
+                            <option value="1">Very High</option>
+                            <option value="2">High</option>
+                            <option value="3">Medium</option>
+                            <option value="4">Low</option>
+                        </select>
+                    </div>
+                    <div class="col"><button class="btn btn-light" (click)="showDateTime()">Sort by Date/Time</button>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container mt-4">
+                <div class="container mt-2">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white">
+                            <h5>Task List</h5>
+                        </div>
+                        <div class="card-body">
+                            <h1 *ngIf="todos.length === 0">No todos available for this date</h1>
+                            <div *ngFor="let username of getUniqueUsernames(); let i = index" class="mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <h5 class="card-title">{{ username }}</h5>
+                                    
+                                    <button class="btn btn-sm btn-secondary" (click)="sortByDateTime(username)">
+                                        {{ sortingOrders[username] ? 'Sort Descending' : 'Sort Ascending' }}
+                                    </button>
+                                </div>
+                                <ul class="list-group">
+                                    <li *ngFor="let task of getTasksForUsername(username)" class="list-group-item">{{ task.todoname }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+
+
+    </div>

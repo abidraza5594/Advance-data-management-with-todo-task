@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+  }
+  
+  .form-container {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .preview-container {
+    flex: 1;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+
+
+  
+  

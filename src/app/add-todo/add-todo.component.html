@@ -1,0 +1,100 @@
+<div class="container-fluid mt-2">
+    <div class="row">
+      <div class="col-2 left">
+        <div class="list-group margin">
+          <button routerLink="/" type="button" class="list-group-item list-group-item-action">Manage User</button>
+          <button routerLink="/managetodo" type="button" class="list-group-item list-group-item-action">Manage Todo</button>
+          <button routerLink="/adddata" type="button" class="list-group-item list-group-item-action">Add User</button>
+          <button routerLink="/addtodo" type="button" class="list-group-item list-group-item-action">Add Todo</button>
+          <button routerLink="/manageuser" type="button" class="list-group-item list-group-item-action">Manage User</button>
+        </div>
+      </div>
+      <div class="col-10">
+        <div class="row">
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title mb-4">Add Todo </h2>
+                <form (ngSubmit)="submitTodo()" #todoForm="ngForm">
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Todo Name:</label>
+                    <input type="text" class="form-control" id="name" name="name" required [(ngModel)]="todo.name">
+                    <div class="error-message small text-danger text-right"
+                      *ngIf="(formSubmitted && todoForm.controls['name']?.invalid) || (!formSubmitted && todoForm.controls['name']?.invalid && todoForm.controls['name']?.touched)">
+                      Name is required.
+                    </div>
+                  </div>
+  
+                  <div class="mb-3">
+                    <label for="users">Users List:</label>
+                    <select name="users" id="users" [(ngModel)]="todo.user" required #userInput="ngModel">
+                      <option value="" disabled>Select a user</option>
+                      <option [value]="user.name" *ngFor="let user of getAllUsers">{{user.name}}</option>                      
+                    </select>
+                    <div class="error-message small text-danger text-right"
+                      *ngIf="(formSubmitted && userInput?.invalid) || (!formSubmitted && userInput?.invalid && userInput?.touched)">
+                      Please select a user.
+                    </div>
+                  </div>
+  
+                  <div class="form-floating mb-3 d-flex">
+                    <label for="datepicker1" class="form-label">Date:</label>
+                    <input type="datetime-local" class="datepicker_input form-control border-2" id="datepicker1"
+                      name="date" required [(ngModel)]="todo.date" >
+                    <div class="error-message small text-danger text-right"
+                      *ngIf="(formSubmitted && todoForm.controls['date']?.invalid) || (!formSubmitted && todoForm.controls['date']?.invalid && todoForm.controls['date']?.touched)">
+                      Date is required.
+                    </div>
+
+                  </div>
+  
+                  <div class="mb-3">
+                    <label for="description" class="form-label">Description:</label>
+                    <textarea class="form-control" id="description" name="description" required
+                      [(ngModel)]="todo.description"></textarea>
+                    <div class="error-message small text-danger text-right"
+                      *ngIf="(formSubmitted && todoForm.controls['description']?.invalid) || (!formSubmitted && todoForm.controls['description']?.invalid && todoForm.controls['description']?.touched)">
+                      Description is required.
+                    </div>
+                  </div>
+  
+                  <div class="mb-3">
+                    <label for="priority">Priority:</label>
+                    <select name="priority" id="priority" [(ngModel)]="todo.priority" required #priorityInput="ngModel">
+                      <option value="" disabled>Select a priority</option>
+                      <option value="1">Very high</option>
+                      <option value="2">High</option>
+                      <option value="3">Medium</option>
+                      <option value="4">Low</option>
+                    </select>
+                    <div class="error-message small text-danger text-right"
+                      *ngIf="(formSubmitted && priorityInput?.invalid) || (!formSubmitted && priorityInput?.invalid && priorityInput?.touched)">
+                      Please select a priority.
+                    </div>
+                  </div>
+  
+                  <button type="submit" *ngIf="!URLid" class="btn btn-primary">{{isShowSaving?"Saving Todo":"Add Todo"}}</button>
+                  <button (click)="updateTodo()"  type="button" *ngIf="URLid" class="btn btn-primary"  >{{isShowSaving ? 'Saving Todo..' : 'Save Todo'}}</button>
+                  <button routerLink="/managetodo" type="button" class="btn btn-secondary mx-2">Back</button>
+                </form>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="card-body">
+                <h2 class="card-title mb-4">Preview</h2>
+                <p class="card-text">Name: {{ todo.name }}</p>
+                <p class="card-text">User: {{ todo.user }}</p>
+                <p class="card-text">Date: {{ todo.date }}</p>
+                <p class="card-text">Description: {{ todo.description }}</p>
+                <p class="card-text">Priority: {{todo.priority ==='1' ? 'Very high' : todo.priority==='2' ? 'High' : todo.priority==='3' ?
+                  'Medium' : todo.priority==='4' ? 'Low' :'' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

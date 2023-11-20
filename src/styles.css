@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'ngx-toastr/toastr';
+
+
+.deleted-table {
+  border: 1px solid rgb(253, 178, 178);
+}
+
+.deleted-table th,
+.deleted-table td {
+  background-color: #f2dede;
+}
+
+.deleted-table .highlight {
+  background-color: #dff0d8;
+}
+
+.margin {
+  margin-top: 53px;
+}
+
+
+
+html,
+body {
+  height: 100%;
+  
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

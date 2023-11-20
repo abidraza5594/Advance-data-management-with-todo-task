@@ -1,0 +1,65 @@
+<div class="container-fluid mt-2">
+  <div class="row">
+    <div class="col-2 left">
+      <div class="list-group margin">
+        <button routerLink="/" type="button" class="list-group-item list-group-item-action">Manage User</button>
+        <button routerLink="/managetodo" type="button" class="list-group-item list-group-item-action">Manage Todo</button>
+        <button routerLink="/adddata" type="button" class="list-group-item list-group-item-action">Add User</button>
+        <button routerLink="/addtodo" type="button" class="list-group-item list-group-item-action">Add Todo</button>
+        <button routerLink="/manageuser" type="button" class="list-group-item list-group-item-action">Manage User</button>
+      </div>
+    </div>    
+    <div class="col-10">
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title mb-4">Add User</h2>
+              <form (ngSubmit)="onSubmit()">
+                <!-- Name Field -->
+                <div class="mb-3">
+                  <label for="name" class="form-label">Name:</label>
+                  <input [(ngModel)]="name" type="text" class="form-control" id="name" name="name" required (focus)="nameValidation = true" [ngClass]="{'is-invalid': nameValidation && !name}">
+                  <div *ngIf="nameValidation && !name" class="error-message small text-danger text-right">
+                    Name is required.
+                  </div>
+                </div>
+
+                <!-- Age Field -->
+                <div class="mb-3">
+                  <label for="age" class="form-label">Age:</label>
+                  <input [(ngModel)]="age" type="number" class="form-control" id="age" name="age" required [min]="1" [max]="100" (focus)="ageValidation = true" [ngClass]="{'is-invalid': ageValidation && (age < 1 || age > 100)}">
+                  <div *ngIf="ageValidation && (age < 1 || age > 100)" class="error-message small text-danger text-right">
+                    Age must be between 1 and 100.
+                  </div>
+                </div>
+
+                <!-- Contact Field -->
+                <div class="mb-3">
+                  <label for="contact" class="form-label">Contact:</label>
+                  <input [(ngModel)]="contact" type="text" class="form-control" id="contact" name="contact" required pattern="[0-9]{10}" (focus)="contactValidation = true" [ngClass]="{'is-invalid': contactValidation && contact.length !== 10}">
+                  <div *ngIf="contactValidation && contact.length !== 10" class="error-message small text-danger text-right">
+                    Contact must be a 10-digit number.
+                  </div>
+                </div>  
+                <button *ngIf="!URLid" type="submit" class="btn btn-primary">{{isShowSubmitting ? 'Submiting..' : 'Submit'}}</button>
+                <button (click)="saveEdit({name:name,age:age,contact:contact})" *ngIf="URLid" type="submit" class="btn btn-primary mx-2">{{isShowSubmitting ? 'Saving..' : 'Save'}}</button>
+                <button routerLink="/" type="submit" class="btn btn-secondary mx-2">Back</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title mb-4">Preview</h2>
+              <p class="card-text">Name: {{ name }}</p>
+              <p class="card-text">Age: {{ age }}</p>
+              <p class="card-text">Contact: {{ contact }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
