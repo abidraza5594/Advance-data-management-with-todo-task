@@ -1,1 +1,13 @@
 
+.main-container{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 18% 80%;
+    overflow-x: hidden;
+
+}
+
+.home{
+    width: 100%;
+    overflow-x: hidden;
+}

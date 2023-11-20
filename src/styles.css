@@ -2,6 +2,16 @@
 @import 'ngx-toastr/toastr';
 
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+
+
 .deleted-table {
   border: 1px solid rgb(253, 178, 178);
 }
@@ -19,18 +29,26 @@
   margin-top: 53px;
 }
 
+  .required:after {
+    content:" *";
+    color: red;
+    
+  }
 
-
-html,
-body {
-  height: 100%;
-  
+  .separator {
+    margin-left: 5px; /* Adjust the margin according to your preference */
+    margin-right: 5px;
+    border-left: 1px solid #000; /* You can use any color you prefer */
+    padding-left: 5px; /* Adjust the padding as needed */
+    padding-right: 5px;
+}
+.cart-type {
+  margin-left: 5px; /* Adjust the margin according to your preference */
+  margin-right: 5px;
+  /* Add any additional styling you want for the cart type separator */
 }
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
 
-}
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+

@@ -5,6 +5,7 @@ import { DataService } from '../data.service';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
+
 @Component({
   selector: 'app-add-todo',
   templateUrl: './add-todo.component.html',
@@ -32,7 +33,8 @@ export class AddTodoComponent {
     private toastr: ToastrService,
     private datafromapi: DataService,
     private http: HttpClient,
-  ) {}
+  ) { }
+
 
   ngOnInit() {
     this.datafromapi.data$.subscribe((data: any) => {
@@ -50,7 +52,19 @@ export class AddTodoComponent {
     });
 
     this.datafromapi.getDataFromAPI().subscribe((data) => {
-      this.getAllUsers = data.filter((item: any) => item.isdeleted === false);
+      const filteredUsers = data.filter((item: any) => item.isdeleted === false);
+      const sortedUsers = filteredUsers.sort((a: any, b: any) => {
+        const nameA = a.name.toLowerCase();
+        const nameB = b.name.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      this.getAllUsers=sortedUsers
     });
   }
 
@@ -88,14 +102,14 @@ export class AddTodoComponent {
   }
 
   async submitTodo() {
-    this.isShowSaving = true;
-
     if (this.validateForm()) {
       if (!this.URLid) {
+        this.isShowSaving = true;
         await this.postTodo();
       }
       this.resetForm();
     } else {
+      this.formSubmitted=true
       console.log('Form is invalid. Please check the fields.');
     }
   }

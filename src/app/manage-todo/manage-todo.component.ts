@@ -20,7 +20,7 @@ export class ManageTodoComponent implements OnInit {
   async markDoneTodo(todo: any) {
     console.log(todo.done)
     this.isMarkDone = true
-    let newData = { ...todo, done: todo.done }
+    let newData = { ...todo, done:  true }
     const resp = await this.http.put(`${this.apiUrl}/${todo.id}`, newData).toPromise();
     console.log(resp)
     resp ? this.isMarkDone = false : this.isMarkDone = true
@@ -28,7 +28,8 @@ export class ManageTodoComponent implements OnInit {
   }
   toggleDone(todo: any) {
     console.log(todo)
-    todo.done = !todo.done;
+    todo.done = true
+    
     this.markDoneTodo(todo)
   }
 
@@ -79,24 +80,24 @@ export class ManageTodoComponent implements OnInit {
 
   updateData() {
     this.dataService.getDataFromAPI().subscribe((response: any) => {
-      this.todos = response;
+      this.todos = response.filter((item: any) => item.isdeleted === false);
     });
-    this.toastr.success
   }
-  deleting: boolean = false
+  
   async deleteHandler(person: any) {
-    this.deleting = true
-    let updatedD = { ...person, isdeleted: true }
+    person.isDeleting = true; 
     try {
-      const resp = await this.http.put(`${this.apiUrl}/${person.id}`, updatedD).toPromise();
-      resp ? this.deleting = false : this.deleting = true
-    }
-    catch (error) {
+      const resp = await this.http.put(`${this.apiUrl}/${person.id}`, { ...person, isdeleted: true }).toPromise();
+      person.isDeleting = false;
+      this.updateData();
+      alert('Data deleted Successful..!');
+    } catch (error) {
       console.log(error);
+      person.isDeleting = false;
+      this.toastr.error('Failed to delete data', 'Error');
     }
-    this.updateData()
-    this.toastr.success('Data deleted..!', 'Successful..!');
   }
+  
 
 
   sendTodoEditData(data: any) {

@@ -1,0 +1,17 @@
+input#datepicker1{
+    position:relative;
+    overflow:hidden;
+  }
+  input#datepicker1::-webkit-calendar-picker-indicator{
+    display:block;
+    top:0;
+    left:0;
+    background: #0000;
+    position:absolute;
+    transform: scale(12)
+  }
+
+  .addtodo{
+    width: 100%;
+    overflow-x: hidden;
+  }

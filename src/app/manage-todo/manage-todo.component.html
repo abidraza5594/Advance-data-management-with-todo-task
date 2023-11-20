@@ -1,36 +1,36 @@
-<div class="container-fluid h-100 w-100">
+<div class="container-fluid managetodo">
     <div class="row">
-        <div class="col-2 left">
+        <div class="col-lg-2 left">
             <div class="list-group margin">
                 <button routerLink="/" type="button" class="list-group-item list-group-item-action">Manage User</button>
-                <button routerLink="/managetodo" type="button" class="list-group-item list-group-item-action">Manage
-                    Todo</button>
-                <button routerLink="/adddata" type="button" class="list-group-item list-group-item-action">Add
-                    User</button>
-                <button routerLink="/addtodo" type="button" class="list-group-item list-group-item-action">Add
-                    Todo</button>
-                    <button routerLink="/manageuser" type="button" class="list-group-item list-group-item-action">Manage User</button>
+                <button routerLink="/adddata" type="button" class="list-group-item list-group-item-action">Add User</button>
+                <button routerLink="/managetodo" type="button" class="list-group-item list-group-item-action">Manage Todo</button>
+                <button routerLink="/addtodo" type="button" class="list-group-item list-group-item-action">Add Todo</button>
+                <button routerLink="/manageuser" type="button" class="list-group-item list-group-item-action">User Todo</button>
             </div>
         </div>
-        <div class="col-10 right mt-2">
-            <div>
-                <div class="row">
-                    <div class="col"><button class="btn btn-light" (click)="showToday()">Today's Todos</button></div>
-                    <div class="col"><button class="btn btn-light" (click)="showUpcoming()">Upcoming Todos</button>
-                    </div>
-                    <div class="col"><button class="btn btn-light" (click)="showDone()">{{isShowDone? "Done Todos" :
-                            "Pending Todos"}}</button></div>
-                    <div class="col">
-                        <select name="cars" class="mt-2" [(ngModel)]="selectedPriority" (change)="showPriority()">
-                            <option value="">Search Priority</option>
-                            <option value="1">Very High</option>
-                            <option value="2">High</option>
-                            <option value="3">Medium</option>
-                            <option value="4">Low</option>
-                        </select>
-                    </div>
-                    <div class="col"><button class="btn btn-light" (click)="showDateTime()">Sort by Date/Time</button>
-                    </div>
+        <div class="col-lg-10 right mt-2">
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-light" (click)="showToday()">Today's Todos</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-light" (click)="showUpcoming()">Upcoming Todos</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-light" (click)="showDone()">{{ isShowDone ? "Done Todos" : "Pending Todos" }}</button>
+                </div>
+                <div class="col">
+                    <select name="cars" class="mt-2 form-control" [(ngModel)]="selectedPriority" (change)="showPriority()">
+                        <option value="">Search Priority</option>
+                        <option value="1">Very High</option>
+                        <option value="2">High</option>
+                        <option value="3">Medium</option>
+                        <option value="4">Low</option>
+                    </select>
+                </div>
+                <div class="col">
+                    <button class="btn btn-light" (click)="showDateTime()">Sort by Date/Time</button>
                 </div>
             </div>
             <table class="table mt-2" border="1">
@@ -47,38 +47,31 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <h1 *ngIf="todos.length===0">Loding...</h1>
+                    <h1 *ngIf="todos.length===0">Loading...</h1>
                     <tr *ngFor="let todo of todos; let i = index">
                         <th scope="row">{{ i + 1 }}</th>
                         <td>{{ todo.userslists }}</td>
                         <td [style.color]="todo.todoname.length===0 ? 'red' : 'green'">{{ todo.todoname.length===0 ? "No task for this user" : todo.todoname }}</td>
-                        <td>{{ todo.datetime | date: 'MM/dd/yyyy HH:mm' }}</td>
+                        <td>{{ todo.datetime | date: 'dd/MM/yyyy HH:mm' }}</td>
                         <td>{{todo.description}}</td>
-                        <td>{{todo.priority ==='1' ? 'Very high' : todo.priority==='2' ? 'High' : todo.priority==='3' ?
-                            'Medium' : todo.priority==='4' ? 'Low' :'' }}</td>
+                        <td>{{todo.priority === '1' ? 'Very high' : todo.priority === '2' ? 'High' : todo.priority === '3' ? 'Medium' : todo.priority === '4' ? 'Low' : '' }}</td>
                         <td [style.color]="todo.done ? 'green' : 'red'">{{ todo.done ? 'Done' : 'Pending' }}</td>
                         <td>
                             <div class="row">
                                 <div class="col-3">
-                                    <button (click)="sendTodoEditData(todo)" [routerLink]="'edittodo/' + todo.id"
-                                        type="button" class="btn btn-primary mx-2">Edit</button>
+                                    <button (click)="sendTodoEditData(todo)" [routerLink]="'edittodo/' + todo.id" type="button" class="btn btn-primary mx-2">Edit</button>
                                 </div>
-
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-danger mx-2"
-                                        (click)="deleteHandler(todo)">{{ 'Delete'}}</button>
-
+                                <div class="col-3" style="z-index: 100;">
+                                    <button type="button" class="btn btn-danger mx-2" (click)="deleteHandler(todo)">{{ todo.isDeleting ? 'Deleting' : 'Delete' }}</button>
                                 </div>
-                                <div class="col-6">
-                                    <button (click)="toggleDone(todo)" class="btn btn-light">{{ todo.done ? 'Mark Undone' : 'Mark as Done' }} </button>
+                                <div class="col">
+                                    <button (click)="toggleDone(todo)" class="btn btn-light">{{ todo.done ? 'Mark Undone' : 'Mark Done' }}</button>
                                 </div>
-
                             </div>
                         </td>
                     </tr>
                 </tbody>
             </table>
         </div>
-
-
     </div>
+</div>

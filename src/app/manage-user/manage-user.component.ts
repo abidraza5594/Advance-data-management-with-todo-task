@@ -35,9 +35,25 @@ export class ManageUserComponent implements OnInit {
   }
   showUpcoming() {
     const today = new Date();
-    const upcomingTodos = this.filterTodos.filter(todo => new Date(todo.datetime) > today);
+    today.setHours(0, 0, 0, 0); 
+    // Filter todos that are after today
+    const upcomingTodos = this.filterTodos.filter(todo => {
+      const todoDate = new Date(todo.datetime);
+      todoDate.setHours(0, 0, 0, 0); 
+      return todoDate > today;
+    });
     this.displayFilteredTodos(upcomingTodos);
   }
+  
+  showOverdue() {
+    const today = new Date();
+    const overdueTodos = this.filterTodos.filter(todo => 
+        new Date(todo.datetime) < today && !todo.done && !todo.isdeleted && todo.todoname.length > 0
+    );
+    console.log(overdueTodos)
+    this.displayFilteredTodos(overdueTodos);
+}
+
 
   isShowDone: boolean = false
   showDone() {
@@ -133,14 +149,11 @@ export class ManageUserComponent implements OnInit {
         let sortedTasks = userTasks.sort((a, b) => {
           const dateA: Date = new Date(a.datetime);
           const dateB: Date = new Date(b.datetime);
-          // Check if dateA and dateB are valid Date objects
           if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-            // Handle invalid dates if needed
             return 0;
           }
           return   dateB.getTime() - dateA.getTime()
         });
-        // Replace the original tasks array with sorted tasks for the specified username
         let filterD = this.todosForSelectedDate.map(task => (task.userslists === username ? sortedTasks.shift() : task));
         this.displayFilteredTodos(filterD)
         console.log(filterD)
@@ -153,9 +166,7 @@ export class ManageUserComponent implements OnInit {
         let sortedTasks = userTasks.sort((a, b) => {
           const dateA: Date = new Date(a.datetime);
           const dateB: Date = new Date(b.datetime);
-          // Check if dateA and dateB are valid Date objects
           if (isNaN(dateA.getTime()) || isNaN(dateB.getTime())) {
-            // Handle invalid dates if needed
             return 0;
           }
           return dateA.getTime() -  dateB.getTime() 
@@ -169,8 +180,75 @@ export class ManageUserComponent implements OnInit {
 
   }
 
+  
+
+    
+  sortPriority(username: any) {
+    if (this.sorting) {
+      this.sorting = false;
+      let userTasks = this.todosForSelectedDate.filter(task => task.userslists === username);
+      if (userTasks.length > 0) {
+        let sortedTasks = userTasks.sort((a, b) => {
+          const priorityA = a.priority;
+          const priorityB = b.priority;
+  
+          // Assuming priority is a number. If it's a string, you may need to convert it appropriately.
+          return priorityB - priorityA;
+        });
+        let filterD = this.todosForSelectedDate.map(task => (task.userslists === username ? sortedTasks.shift() : task));
+        this.displayFilteredTodos(filterD);
+        console.log(filterD);
+      }
+    } else {
+      this.sorting = true;
+      let userTasks = this.todosForSelectedDate.filter(task => task.userslists === username);
+      if (userTasks.length > 0) {
+        let sortedTasks = userTasks.sort((a, b) => {
+          const priorityA = a.priority;
+          const priorityB = b.priority;
+  
+          // Assuming priority is a number. If it's a string, you may need to convert it appropriately.
+          return priorityA - priorityB;
+        });
+        let filterD = this.todosForSelectedDate.map(task => (task.userslists === username ? sortedTasks.shift() : task));
+        this.displayFilteredTodos(filterD);
+        console.log(filterD);
+      }
+    }
+  }
+  
 
 
+
+  getPriorityClass(priority: string): string {
+    switch (priority) {
+      case '1':
+        return 'text-danger'; // for very high priority
+      case '2':
+        return 'text-warning'; // for high priority
+      case '3':
+        return 'text-info'; // for medium priority
+      case '4':
+        return 'text-success'; // for low priority
+      default:
+        return ''; 
+    }
+  }
+
+  getPriorityLabel(priority: string): string {
+    switch (priority) {
+      case '1':
+        return 'Very High';
+      case '2':
+        return 'High';
+      case '3':
+        return 'Medium';
+      case '4':
+        return 'Low';
+      default:
+        return ''; 
+    }
+  }
 
 
 

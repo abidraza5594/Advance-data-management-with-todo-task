@@ -1,29 +1,36 @@
-import { TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { AppComponent } from './app.component';
+// <ul class="list-group">
+// <li *ngFor="let task of getTasksForUsername(username)" class="list-group-item">
+//     <div class="task-info">
+//         <div class="task-header">
+//             <div>
+//                 <span [style.color]="task.done ? 'green' : 'red'" class="todo-name">{{
+//                     task.todoname }}</span>
+//             </div>
+//             <div>
+//                 <span class="priority" [class]="getPriorityClass(task.priority)">{{
+//                     getPriorityLabel(task.priority) }}</span>
+//             </div>
+//         </div>
 
-describe('AppComponent', () => {
-  beforeEach(() => TestBed.configureTestingModule({
-    imports: [RouterTestingModule],
-    declarations: [AppComponent]
-  }));
+//         <!-- Separator between todo name and priority -->
+//         <div class="separator"></div>
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
+//         <div class="task-details mt-2">
+//             <div class="datetime-info ml-3">
+//                 <sub class="small datetime">{{ task.datetime | date: 'dd MMMM yyyy
+//                     HH:mm' }}</sub>
+//             </div>
+//         </div>
 
-  it(`should have as title 'datamanage'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('datamanage');
-  });
+//         <!-- Separator between priority and datetime -->
+//         <div class="separator"></div>
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('datamanage app is running!');
-  });
-});
+//         <div class="d-flex justify-content-between align-items-center">
+//             <span class="task-status" [class.done]="task.done"
+//                 [class.pending]="!task.done">
+//                 {{ task.done ? 'Done' : 'Pending' }}
+//             </span>
+//         </div>
+//     </div>
+// </li>
+// </ul>
