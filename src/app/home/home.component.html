@@ -197,8 +197,8 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let person of selectedFilterData ; let index=index">
-                <th scope="row">{{index+1}}</th>
+              <tr *ngFor="let person of selectedFilterData | paginate:{itemsPerPage:tableSize,currentPage:page,totalItems:count}; let index=index">
+                <th scope="row">{{(page-1)*tableSize+index+1}}</th>
                 <td [class.highlight]="selectedFilter === 'name'">{{person.name}}</td>
                 <td *ngIf="showage">{{person.age}}</td>
                 <td *ngIf="showcontact" [class.highlight]="selectedFilter === 'contact'">{{person.contact}}
@@ -235,7 +235,7 @@
             <tbody>
               <tr
                 *ngFor="let person of selectedRowData | paginate:{itemsPerPage:tableSize,currentPage:page,totalItems:count} let index=index">
-                <th scope="row">{{index+1}}</th>
+                <th scope="row">{{(page-1)*tableSize+index+1}}</th>
                 <td [class.highlight]="selectedFilter === 'name'">{{person.name}}</td>
                 <td *ngIf="showage">{{person.age}}</td>
                 <td *ngIf="showcontact" [class.highlight]="selectedFilter === 'contact'">{{person.contact}}
@@ -270,7 +270,7 @@
         </div>
         <div *ngIf="selectedFilterDataDeleted.length===0">
           <div>
-            <div class="col" *ngIf="selectedItems.length===0">
+            <div class="col" >
               <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
               </pagination-controls>
             </div>

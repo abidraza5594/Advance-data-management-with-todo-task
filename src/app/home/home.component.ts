@@ -35,6 +35,7 @@ export class HomeComponent {
   page: number = 1
   count: number = 0
   tableSize: number = 7
+  selectedFilterDataTableSize=this.selectedFilterData.length
   tableSizes: any = [5, 10, 15, 20]
   dropdownList: any = [];
   dropdownSettings: IDropdownSettings = {}
@@ -110,14 +111,14 @@ export class HomeComponent {
   selectedRowData: any = []
   selectedrownum: any = 0
   selectRow(num: number) {
-    this.selectedFilterData = []
-    this.selectedItems=[]
+    // this.selectedFilterData = []
+    // this.selectedItems=[]
     this.selectedrownum = num
     this.tableSize = num
     this.onTableDataChange(1)
     this.onTableSizeChange(1)
     this.selectedRowNumber = num
-    this.selectedRowData = this.filteredPeople.slice(0, num)
+    this.selectedFilterData = this.selectedFilterData.slice(0, num)
     
   }
 
@@ -172,18 +173,28 @@ export class HomeComponent {
   }
 
   onItemSelect(item: any) {
+    console.log(this.selectedItems)
     this.selectedRowData = []
     let selectItem = this.filteredPeople.filter((data: any) => data.id === item.item_id)
     this.selectedFilterData.unshift(selectItem[0])
+    if(this.selectedItems.length>0){
+      this.selectedFilterData = this.filteredPeople.filter((item:any) => this.selectedItems.some((arrItem:any) => arrItem.item_id === item.id));
+      console.log(this.selectedFilterData)
+    }
   }
   onDeselect(valu: any) {
     this.selectedFilterData = this.selectedFilterData.filter((data: any) => data.id !== valu.item_id)
+    if(this.selectedItems.length>0){
+      this.selectedFilterData = this.filteredPeople.filter((item:any) => this.selectedItems.some((arrItem:any) => arrItem.item_id === item.id));
+      console.log(this.selectedFilterData)
+    }
   }
   onSelectAll(items: any) {
     this.selectedFilterData = this.filteredPeople
   }
   onDeselectAll(items: any) {
     this.selectedFilterData = []
+    this.selectedRowData=[]
   }
   // ----------- Deleted ------------
   onItemSelectDeleted(item: any) {

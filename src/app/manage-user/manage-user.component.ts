@@ -3,6 +3,7 @@ import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 import { DataService } from '../data.service';
 import { HttpClient } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
+import { PushNotificationService } from '../push-notification.service';
 
 @Component({
   selector: 'app-manage-user',
@@ -17,7 +18,9 @@ export class ManageUserComponent implements OnInit {
   selectedDate: Date | null = new Date();
   todosForSelectedDate: any[] = [];
 
-  constructor(private dataService: DataService, private http: HttpClient, private toastr: ToastrService,) { }
+  constructor(private dataService: DataService, private http: HttpClient,
+     private toastr: ToastrService,
+     private pushNotificationService: PushNotificationService) { }
 
   getUniqueUsernames() {
     return Array.from(new Set(this.todos.map(task => task.userslists)));
@@ -84,8 +87,19 @@ export class ManageUserComponent implements OnInit {
   }
 
 
+  scheduleNotification() {
+    const notificationData = {
+      message: 'Your notification message',
+      // other data as needed
+    };
+
+    this.pushNotificationService.scheduleNotification(notificationData);
+  }
 
   ngOnInit() {
+    this.pushNotificationService.requestNotificationPermission();
+    this.scheduleNotification()
+
     // Filter todos for the initial selected date (today)
     this.dataService.getDataFromAPI().subscribe(
       (data: any[]) => {
@@ -192,7 +206,6 @@ export class ManageUserComponent implements OnInit {
           const priorityA = a.priority;
           const priorityB = b.priority;
   
-          // Assuming priority is a number. If it's a string, you may need to convert it appropriately.
           return priorityB - priorityA;
         });
         let filterD = this.todosForSelectedDate.map(task => (task.userslists === username ? sortedTasks.shift() : task));
@@ -207,7 +220,6 @@ export class ManageUserComponent implements OnInit {
           const priorityA = a.priority;
           const priorityB = b.priority;
   
-          // Assuming priority is a number. If it's a string, you may need to convert it appropriately.
           return priorityA - priorityB;
         });
         let filterD = this.todosForSelectedDate.map(task => (task.userslists === username ? sortedTasks.shift() : task));
