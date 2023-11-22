@@ -1,5 +1,4 @@
 import { NgModule, isDevMode } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +24,14 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { BrowserModule } from '@angular/platform-browser';
+import { AgGridModule } from 'ag-grid-angular';
+import "ag-grid-enterprise";
+import { DeleteButtonComponent } from './delete-button/delete-button.component';
+import { ActionsRendererComponentComponent } from './actions-renderer-component/actions-renderer-component.component'
+import { TaskNameRendererComponent } from './Components/task-name-renderer.component';
+import { ActionsRendererComponent } from './Components/actions-renderer.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +40,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AddTodoComponent,
     ManageTodoComponent,
     ManageUserComponent,
+    DeleteButtonComponent,
+    ActionsRendererComponentComponent,
+    TaskNameRendererComponent,
+    ActionsRendererComponent,
     
   ],
   imports: [
@@ -60,9 +71,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
+    AgGridModule
+
 
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [TaskNameRendererComponent],
 })
 export class AppModule { }

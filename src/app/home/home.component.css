@@ -1,4 +1,7 @@
 
+
+
+
 .main-container{
     width: 100%;
     display: grid;
@@ -11,3 +14,14 @@
     width: 100%;
     overflow-x: hidden;
 }
+.age{
+    width: 100%;
+}
+.contact{
+    width: 100%;
+}
+
+
+
+
+

@@ -38,6 +38,7 @@ export class AddTodoComponent {
 
   ngOnInit() {
     this.datafromapi.data$.subscribe((data: any) => {
+      console.log(data)
       this.editTodo = data;
       this.initializeFormWithEditTodo();
     });

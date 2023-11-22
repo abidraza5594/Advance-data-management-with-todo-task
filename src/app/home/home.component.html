@@ -55,26 +55,26 @@
             </div>
           </div>
         </div>
-        <div class="col">
+        <!-- <div class="col">
           <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"
-              aria-haspopup="true" aria-expanded="false">
+              aria-haspopup="true" aria-expanded="true">
               Column
             </button>
             <div class="dropdown-menu">
               <div class="dropdown-item">
                 <input type="checkbox" id="checkbox1" (change)="checkboxChanged('checkbox1', $event)"
                   [checked]="showcontact">
-                <label for="checkbox1">Contact</label>
+                <label class="contact ml-3" for="checkbox1">Contact</label>
               </div>
               <div class="dropdown-item">
                 <input type="checkbox" id="checkbox2" (change)="checkboxChanged('checkbox2', $event)"
                   [checked]="showage">
-                <label for="checkbox2">Age</label>
+                <label class="age ml-3" for="checkbox2">Age</label>
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- ----------------------------- -->
@@ -82,100 +82,26 @@
       <div class="row" *ngIf="isShowHome">
         <div class="col">
           <div *ngIf="selectedFilterData.length===0 && selectedRowData.length===0">
+            
             <table class="table mt-2" border="1" *ngIf="!isshowDeleteData && !isEditShow && isShowHome">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col" *ngIf="showage">Age</th>
-                  <th scope="col" *ngIf="showcontact">Contact</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <h1 class="text-center" *ngIf="filteredPeople.length===0">Loding...</h1>
-                <tr
-                  *ngFor="let person of filteredPeople | paginate:{itemsPerPage:tableSize,currentPage:page,totalItems:count}; let index=index">
-                  <th scope="row">{{(page-1)*tableSize+index+1}}</th>
-                  <td [class.highlight]="selectedFilter === 'name'">{{person.name}}</td>
-                  <td *ngIf="showage">{{person.age}}</td>
-                  <td *ngIf="showcontact" [class.highlight]="selectedFilter === 'contact'">
-                    {{person.contact}}</td>
-                  <td>
-                    <div class="row">
-                      <div class="col">
-                        <button [routerLink]="'edit/' + person.id" (click)="editHandler(person)" type="button"
-                          class="btn btn-primary mx-2">Edit</button>
-                        <button (click)="deleteHandler(person)" type="button"
-                          class="btn btn-danger mx-2">Delete</button>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              
+              <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="filteredPeople"
+                [columnDefs]="colDefs" [pagination]="true" [paginationPageSize]="tableSize" [animateRows]="true" [rowSelection]="'multiple'">
+              </ag-grid-angular>
             </table>
             <!-- ----------------------- Delete Table ----------------------- -->
             <table *ngIf="isshowDeleteData && selectedFilterDataDeleted.length===0" class="table mt-2 deleted-table"
               border="1">
-              <h1 *ngIf="deletedData.length===0">No Data Found...!</h1>
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">name</th>
-                  <th scope="col" *ngIf="showage">Age</th>
-                  <th scope="col" *ngIf="showcontact">Contact</th>
-                  <th scope="col">Re-Store</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="let person of  deletedData | paginate:{itemsPerPage:tableSize,currentPage:page,totalItems:count}; let index=index">
-                  <th scope="row">{{(page-1)*tableSize+index+1}}</th>
-                  <td [class.highlight]="selectedFilter === 'name'">{{person.name}}</td>
-                  <td *ngIf="showage">{{person.age}}</td>
-                  <td *ngIf="showcontact" [class.highlight]="selectedFilter === 'contact'">
-                    {{person.contact}}</td>
-                  <td>
-                    <div class="row">
-                      <div class="col">
-                        <button (click)="reStoreData(person)" type="button" class="btn btn-primary mx-2">Re
-                          Store</button>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="deletedData"
+                [columnDefs]="colDefs" [pagination]="true" [paginationPageSize]="tableSize" [animateRows]="true" [rowSelection]="'multiple'">
+              </ag-grid-angular>
             </table>
             <!-- --------------- Deleted Selected item -------------------- -->
 
             <table *ngIf="selectedFilterDataDeleted.length>0" class="table mt-2 deleted-table" border="1">
-              <h1 *ngIf="deletedData.length===0">No Data Found...!</h1>
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col" *ngIf="showage">Age</th>
-                  <th scope="col" *ngIf="showcontact">Contact</th>
-                  <th scope="col">Re-Store</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let person of  selectedFilterDataDeleted ; let index=index">
-                  <th scope="row">{{index+1}}</th>
-                  <td [class.highlight]="selectedFilter === 'name'">{{person.name}}</td>
-                  <td *ngIf="showage">{{person.age}}</td>
-                  <td *ngIf="showcontact" [class.highlight]="selectedFilter === 'contact'">
-                    {{person.contact}}</td>
-                  <td>
-                    <div class="row">
-                      <div class="col">
-                        <button (click)="reStoreData(person)" type="button" class="btn btn-primary mx-2">Re
-                          Store</button>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
+              <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="selectedFilterDataDeleted"
+                [columnDefs]="colDefs" [pagination]="true" [paginationPageSize]="tableSize" [animateRows]="true" [rowSelection]="'multiple'">
+              </ag-grid-angular>
             </table>
 
           </div>
@@ -187,33 +113,9 @@
         <div class="col">
           <!-- -------------------- Search Data ----------------------- -->
           <table class="table mt-2" border="1">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col" *ngIf="showage">Age</th>
-                <th scope="col" *ngIf="showcontact">Contact</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let person of selectedFilterData | paginate:{itemsPerPage:tableSize,currentPage:page,totalItems:count}; let index=index">
-                <th scope="row">{{(page-1)*tableSize+index+1}}</th>
-                <td [class.highlight]="selectedFilter === 'name'">{{person.name}}</td>
-                <td *ngIf="showage">{{person.age}}</td>
-                <td *ngIf="showcontact" [class.highlight]="selectedFilter === 'contact'">{{person.contact}}
-                </td>
-                <td>
-                  <div class="row">
-                    <div class="col">
-                      <button [routerLink]="'edit/' + person.id" (click)="editHandler(person)" type="button"
-                        class="btn btn-primary mx-2">Edit</button>
-                      <button (click)="deleteHandler(person)" type="button" class="btn btn-danger mx-2">Delete</button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
+            <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="selectedFilterData"
+                [columnDefs]="colDefs" [pagination]="true" [paginationPageSize]="tableSize" [animateRows]="true" [rowSelection]="'multiple'">
+              </ag-grid-angular>
           </table>
         </div>
       </div>
@@ -223,40 +125,15 @@
         <div class="col">
           <!-- ---------------- Selected Row --------------- -->
           <table class="table mt-2" border="1">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col" *ngIf="showage">Age</th>
-                <th scope="col" *ngIf="showcontact">Contact</th>
-                <th scope="col">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                *ngFor="let person of selectedRowData | paginate:{itemsPerPage:tableSize,currentPage:page,totalItems:count} let index=index">
-                <th scope="row">{{(page-1)*tableSize+index+1}}</th>
-                <td [class.highlight]="selectedFilter === 'name'">{{person.name}}</td>
-                <td *ngIf="showage">{{person.age}}</td>
-                <td *ngIf="showcontact" [class.highlight]="selectedFilter === 'contact'">{{person.contact}}
-                </td>
-                <td>
-                  <div class="row">
-                    <div class="col">
-                      <button [routerLink]="'edit/' + person.id" (click)="editHandler(person)" type="button"
-                        class="btn btn-primary mx-2">Edit</button>
-                      <button (click)="deleteHandler(person)" type="button" class="btn btn-danger mx-2">Delete</button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
+            <ag-grid-angular style="width: 100%; height: 500px;" class="ag-theme-alpine" [rowData]="selectedRowData"
+                [columnDefs]="colDefs" [pagination]="true" [paginationPageSize]="tableSize" [animateRows]="true" [rowSelection]="'multiple'">
+              </ag-grid-angular>
           </table>
-        </div>
+        </div> 
       </div>
 
       <div class="row">
-        <div class="col">
+        <!-- <div class="col">
           <span *ngIf="selectedFilterDataDeleted.length>0">{{selectedFilterDataDeleted.length}} Of Total Data
             :{{deletedData.length}}</span>
           <span *ngIf="selectedFilterData.length>0">{{selectedFilterData.length}} Of Total
@@ -267,13 +144,13 @@
             {{selectedrownum===0 ? '' : selectedrownum + ' Of' }} Total Data :{{filteredPeople.length}} </span>
           <span *ngIf="isshowDeleteData && selectedFilterDataDeleted.length===0">Total Data
             :{{deletedData.length}}</span>
-        </div>
+        </div> -->
         <div *ngIf="selectedFilterDataDeleted.length===0">
           <div>
-            <div class="col" >
+            <!-- <div class="col">
               <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
               </pagination-controls>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

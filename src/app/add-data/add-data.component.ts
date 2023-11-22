@@ -156,6 +156,7 @@ export class AddDataComponent {
 
   ngOnInit(): void {
     this.datafromapi.data$.subscribe((data:any) => {
+      console.log(data)
       this.editData = data;
     });
 

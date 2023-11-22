@@ -22,8 +22,19 @@ export class DataService  {
     this.dataSubject.next(data);
   }
 
+  getData() {
+    return this.dataSubject.asObservable();
+  }
+
   sendTodoEditData(data:any){
     this.dataSubject.next(data);
+  }
+
+  sendUpdatedData(data:any){
+    this.dataSubject.next(data);
+  }
+  getUpdatedData(){
+    return this.dataSubject.value;
   }
 
 }
