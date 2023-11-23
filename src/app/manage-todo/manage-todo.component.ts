@@ -46,7 +46,7 @@ export class ManageTodoComponent implements OnInit {
       }
     }
   ,    
-    // { headerName: 'Description', field: 'description' },
+    { headerName: 'Description', field: 'description' },
     { headerName: 'Priority',sortable: true, field: 'priority', valueFormatter: (params: any) => this.formatPriority(params.value) },
     
     // {
@@ -190,7 +190,8 @@ export class ManageTodoComponent implements OnInit {
   ngOnInit() {
 
     this.dataService.getData().subscribe((data)=>{
-      this.filterTodos=data
+      console.log(data)
+      this.todos=data
     })
 
 

@@ -2,14 +2,14 @@
   <div class="row">
     <div class="col-2 left">
       <div class="list-group margin">
-        <button routerLink="/" type="button" class="list-group-item list-group-item-action">Manage User</button>
-        <button routerLink="/adddata" type="button" class="list-group-item list-group-item-action">Add
+        <button [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" routerLink="/" type="button" class="list-group-item list-group-item-action">Manage User</button>
+        <button routerLinkActive="active" routerLink="/adddata" type="button" class="list-group-item list-group-item-action">Add
             User</button>
-        <button routerLink="/managetodo" type="button" class="list-group-item list-group-item-action">Manage
+        <button routerLinkActive="active" routerLink="/managetodo" type="button" class="list-group-item list-group-item-action">Manage
             Todo</button>
-        <button routerLink="/addtodo" type="button" class="list-group-item list-group-item-action">Add
+        <button routerLinkActive="active" routerLink="/addtodo" type="button" class="list-group-item list-group-item-action">Add
             Todo</button>
-        <button routerLink="/manageuser" type="button" class="list-group-item list-group-item-action">
+        <button routerLinkActive="active" routerLink="/manageuser" type="button" class="list-group-item list-group-item-action">
             User Todo</button>
     </div>
     </div>    

@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../data.service';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class AddTodoComponent {
     description: '',
     priority: ''
   };
+  
   editTodo: any;
   URLid: any;
   formSubmitted = false;
@@ -33,13 +35,14 @@ export class AddTodoComponent {
     private toastr: ToastrService,
     private datafromapi: DataService,
     private http: HttpClient,
+    private location: Location
   ) { }
 
 
   ngOnInit() {
     this.datafromapi.data$.subscribe((data: any) => {
-      console.log(data)
       this.editTodo = data;
+      console.log(data)
       this.initializeFormWithEditTodo();
     });
 
@@ -170,4 +173,7 @@ export class AddTodoComponent {
       });
     }
   }
+  // goBack(){
+  //   this.location.back();
+  // }
 }

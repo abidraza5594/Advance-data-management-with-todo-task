@@ -2,14 +2,14 @@
     <div class="row">
       <div class="col-2 left">
         <div class="list-group margin">
-          <button routerLink="/" type="button" class="list-group-item list-group-item-action">Manage User</button>
-          <button routerLink="/adddata" type="button" class="list-group-item list-group-item-action">Add
+          <button [routerLinkActiveOptions]="{ exact: true }" routerLinkActive="active" routerLink="/" type="button" class="list-group-item list-group-item-action">Manage User</button>
+          <button routerLinkActive="active" routerLink="/adddata" type="button" class="list-group-item list-group-item-action">Add
               User</button>
-          <button routerLink="/managetodo" type="button" class="list-group-item list-group-item-action">Manage
+          <button routerLinkActive="active" routerLink="/managetodo" type="button" class="list-group-item list-group-item-action">Manage
               Todo</button>
-          <button routerLink="/addtodo" type="button" class="list-group-item list-group-item-action">Add
+          <button routerLinkActive="active" routerLink="/addtodo" type="button" class="list-group-item list-group-item-action">Add
               Todo</button>
-          <button routerLink="/manageuser" type="button" class="list-group-item list-group-item-action">
+          <button routerLinkActive="active" routerLink="/manageuser" type="button" class="list-group-item list-group-item-action">
               User Todo</button>
       </div>
       </div>
@@ -32,7 +32,7 @@
                   <div class="mb-3">
                     <label for="users" class="required">Users List:</label>
                     <select name="users" id="users" [(ngModel)]="todo.user" required #userInput="ngModel">
-                      <option value="" disabled>Select a user</option>
+                      <option value="{{todo.user}}" disabled>{{todo.user ? todo.user : "Select User"}}</option>
                       <option [value]="user.name" *ngFor="let user of getAllUsers">{{user.name}}</option>                      
                     </select>
                     <div class="error-message small text-danger text-right"
@@ -64,7 +64,8 @@
                   <div class="mb-3">
                     <label for="priority" class="required">Priority:</label>
                     <select name="priority" id="priority" [(ngModel)]="todo.priority" required #priorityInput="ngModel">
-                      <option value="" disabled>Select a priority</option>
+                      <option value="{{todo.priority ==='1' ? 'Very high' : todo.priority==='2' ? 'High' : todo.priority==='3' ?
+                  'Medium' : todo.priority==='4' ? 'Low' :'' }}" disabled>Select a priority</option>
                       <option value="1">Very high</option>
                       <option value="2">High</option>
                       <option value="3">Medium</option>

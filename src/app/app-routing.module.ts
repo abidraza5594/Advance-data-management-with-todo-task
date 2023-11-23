@@ -7,7 +7,7 @@ import { ManageTodoComponent } from './manage-todo/manage-todo.component';
 import { ManageUserComponent } from './manage-user/manage-user.component';
 
 const routes: Routes = [
-  { path:'', component : HomeComponent},
+  { path:'', component : HomeComponent,pathMatch: 'full'},
   {path:'edit/:id' , component : AddDataComponent},
   {path:'adddata' , component : AddDataComponent},
   {path:'addtodo' , component : AddTodoComponent},

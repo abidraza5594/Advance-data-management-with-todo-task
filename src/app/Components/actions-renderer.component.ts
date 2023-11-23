@@ -30,7 +30,6 @@ export class ActionsRendererComponent {
 
     agInit(params: any): void {
         this.params = params;
-        console.log(params)
     }
 
     edit(): void {
